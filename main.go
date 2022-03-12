@@ -13,3 +13,8 @@ func main() {
 	http.HandleFunc("/", handlerFunc)
 	http.ListenAndServe(":3000", nil)
 }
+
+
+/** Things to checkout:
+ *  Dynamic reloading: https://github.com/pilu/fresh - Box3.2
+ */

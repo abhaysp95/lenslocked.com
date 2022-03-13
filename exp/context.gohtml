@@ -1,0 +1,28 @@
+{{.Title}}
+{{.HTML}}
+{{.SafeHTML}}
+{{.}}
+
+<a title="{{.Title}}">
+<a title="{{.HTML}}">
+
+<a href="{{.HTML}}">
+<a href="?q={{.HTML}}">
+<a href="{{.Path}}">
+<a href="?q={{.Path}}">
+
+<!-- Encoding even works on non-string values -->
+
+<script>
+	let dog = {
+		name: {{.Dog.Name}},
+		age: {{.Dog.Age}},
+	}
+	console.log(Object.keys(dog))
+	var map = {{.Map}};
+	let map_keys = {
+		key: {{.Map}}["key"],  // I think using [] is not working here (neither does {{.Map[...]}})
+		another_key: {{.Map.another_key}}
+	}
+	doWork({{.Title}});
+</script>

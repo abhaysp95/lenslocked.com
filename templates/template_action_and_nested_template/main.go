@@ -7,8 +7,14 @@ import (
 
 var testTemplate *template.Template
 
+type Widget struct {
+	Name string
+	Price int
+}
+
 type ViewData struct {
 	Name string
+	Widgets []Widget
 }
 
 func action_and_nesting() {
@@ -21,7 +27,14 @@ func action_and_nesting() {
 
 func handler(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
-	vd := ViewData{"John Doe"}
+	vd := ViewData{
+		Name: "John Doe",
+		Widgets: []Widget{
+			{"Red", 12},
+			{"Green", 12},
+			{"Blue", 12},
+		},
+	}
 	err := testTemplate.Execute(w, vd)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

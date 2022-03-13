@@ -1,1 +1,65 @@
-<h1>Hello, {{.Name}}</h1>
+{{define "footer"}}
+	<footer>
+		<p>Copyright 2016 Calhoun.io</p>
+		<p>Contact information:
+			<a href="mailto:someone@somewhere.xyz">someone@somewhere.xzy</a>
+		</p>
+	</footer>
+{{end}}
+
+<!-- I think newline and space don't pose the problem when rendering in html
+(but will print exactly like this in Stdout) -->
+<h1>
+	Hello, {{if .Name}}
+		{{.Name}}
+	{{- else}}
+		there
+	{{- end}}!
+</h1>
+
+<!-- {{range .Widgets}}
+	<pre>{{.}}</pre>
+	<div class="widget">
+		<h3 class="name">{{.Name}}</h3>
+		<span class="price">${{.Price}}</span>
+	</div>
+{{end}} -->
+
+<!-- by using variables (checkout Variables section in text/template doc) -->
+{{range $key, $value := .Widgets}}  <!-- even though .Widgets is map, $key returns index count -->
+	<div class="widget">
+		<h3 class="name">{{$key}}. {{$value.Name}}</h3>
+		<span class="price">${{$value.Price}}</span>
+	</div>
+{{end}}
+
+<hr>
+
+{{define "widget-header"}}
+	<h3 class="name">{{.}}</h3>
+{{end}}
+
+{{range .Widgets}}
+	<div class="widget">
+		{{template "widget-header" .Name}}
+		<span class="price">${{.Price}}</span>
+	</div>
+{{end}}
+
+<hr>
+
+{{define "widget"}}
+	<div class="widget">
+		{{template "widget-header" .Name}}
+		<span class="price">${{.Price}}</span>
+	</div>
+{{end}}
+
+{{range .Widgets}}
+	{{template "widget" .}}
+{{end}}
+
+<hr>
+
+{{template "footer"}}  <!-- call the previously declared template -->
+

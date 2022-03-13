@@ -13,8 +13,9 @@ func main() {
 
 	data := struct {
 		Name string
-		// } {"John Doe"}
-	} {"<script>alert('Howdy!');</script>"}  // unsafe string
+		State string
+	} {"John Doe", "Awesome"}
+	// } {"<script>alert('Howdy!');</script>"}  // unsafe string
 
 	err = t.Execute(os.Stdout, data)
 	if err != nil {

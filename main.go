@@ -61,4 +61,5 @@ func main() {
 /** Things to checkout:
  *  Dynamic reloading: https://github.com/pilu/fresh - Box3.2
  *  Another router: https://github.com/julienschmidt/httprouter - Ex3
+ *	Closure: https://www.calhoun.io/what-is-a-closure
 replicate the program we have written so far using this router inste */

@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"html/template"
 	"net/http"
 
+	"lenslocked.com/views"
 	"github.com/gorilla/mux"
 )
 
@@ -18,19 +18,19 @@ import (
 	}
 } */
 
-var homeTemplate *template.Template
-var contactTemplate *template.Template
+var homeView *views.View
+var contactView *views.View
 
 func home(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
-	if err := homeTemplate.Execute(w, nil); err != nil {
+	if err := homeView.Template.Execute(w, nil); err != nil {
 		panic(err)
 	}
 }
 
 func contact(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
-	if err := contactTemplate.Execute(w, nil); err != nil {
+	if err := contactView.Template.Execute(w, nil); err != nil {
 		panic(err)
 	}
 }
@@ -55,13 +55,9 @@ func status404(w http.ResponseWriter, req *http.Request) {
  */
 
 func main() {
-	var err error
-	homeTemplate, err = template.ParseFiles("views/home.gohtml")
-	if err != nil {
-		panic(err)
-	}
-	// template.Must does exactly what the above 4 lines are doing
-	contactTemplate = template.Must(template.ParseFiles("views/contact.gohtml"))
+	homeView = views.NewView("views/home.gohtml")
+	contactView = views.NewView("views/contact.gohtml")
+
 	r := mux.NewRouter()  // like we do with http.NewServeMux()
 	r.HandleFunc("/", home)
 	r.HandleFunc("/contact", contact)

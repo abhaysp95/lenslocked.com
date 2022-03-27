@@ -71,4 +71,5 @@ func main() {
  *  Dynamic reloading: https://github.com/pilu/fresh - Box3.2
  *  Another router: https://github.com/julienschmidt/httprouter - Ex3
  *	Closure: https://www.calhoun.io/what-is-a-closure
-replicate the program we have written so far using this router inste */
+ *  Glob vs Regex: http://stackoverflow.com/questions/23702202/what-are-the-differences-between-glob-style-pattern-and-regular-expression
+replicate the program we have written so far using this router instead */

@@ -23,16 +23,12 @@ var contactView *views.View
 
 func home(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
-	if err := homeView.Template.ExecuteTemplate(w, homeView.Layout, nil); err != nil {
-		panic(err)
-	}
+	must(homeView.Render(w, nil))
 }
 
 func contact(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
-	if err := contactView.Template.ExecuteTemplate(w, contactView.Layout, nil); err != nil {
-		panic(err)
-	}
+	must(contactView.Render(w, nil))
 }
 
 func faq_helper(w http.ResponseWriter, req *http.Request) {
@@ -66,6 +62,12 @@ func main() {
 	http.ListenAndServe(":3000", r)
 }
 
+// must is helper wrapper, that panics upon an error
+func must(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
 
 /** Things to checkout:
  *  Dynamic reloading: https://github.com/pilu/fresh - Box3.2

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"html/template"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -17,16 +18,21 @@ import (
 	}
 } */
 
+var homeTemplate *template.Template
+var contactTemplate *template.Template
+
 func home(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
-	fmt.Fprintf(w, "<h1>Welcome to my site!</h1>")
+	if err := homeTemplate.Execute(w, nil); err != nil {
+		panic(err)
+	}
 }
 
 func contact(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
-	fmt.Fprintf(w, "To get in touch, please send an email to " +
-		"<a href=\"mailto:support@lenslocked.com\">" +
-		"support@lenslocked.com</a>.")
+	if err := contactTemplate.Execute(w, nil); err != nil {
+		panic(err)
+	}
 }
 
 func faq_helper(w http.ResponseWriter, req *http.Request) {
@@ -49,6 +55,13 @@ func status404(w http.ResponseWriter, req *http.Request) {
  */
 
 func main() {
+	var err error
+	homeTemplate, err = template.ParseFiles("views/home.gohtml")
+	if err != nil {
+		panic(err)
+	}
+	// template.Must does exactly what the above 4 lines are doing
+	contactTemplate = template.Must(template.ParseFiles("views/contact.gohtml"))
 	r := mux.NewRouter()  // like we do with http.NewServeMux()
 	r.HandleFunc("/", home)
 	r.HandleFunc("/contact", contact)
